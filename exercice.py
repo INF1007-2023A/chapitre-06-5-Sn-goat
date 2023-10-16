@@ -3,10 +3,37 @@
 
 
 def check_brackets(text, brackets):
-	return False
+    opening_brackets = dict(zip(brackets[0::2], brackets[1::2]))
+    closing_brackets = dict(zip(brackets[1::2], brackets[0::2]))
+    listBrakets = []
+    for chr in text:
+        if chr in opening_brackets:
+            listBrakets.append(chr)
+        elif chr in closing_brackets:
+            if (len(listBrakets) == 0) or (listBrakets[-1] != closing_brackets[chr]):
+
+                return False
+            else:
+                listBrakets.pop()
+    check = len(listBrakets) == 0
+   
+    return check
 
 def remove_comments(full_text, comment_start, comment_end):
-	return ""
+    if comment_start in full_text:
+        firstPart = full_text.replace(comment_start, "")
+        if comment_end in full_text:
+            secondPart = firstPart.replace(comment_end, "").split(" ")
+        else:
+         return None
+    elif comment_end not in full_text:
+        return full_text
+    else:
+        return None
+    comment = secondPart[0] + secondPart[-1]
+    return comment
+
+
 
 def get_tag_prefix(text, opening_tags, closing_tags):
 	return (None, None)
